@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails'
+gem 'mechanize'
+gem 'hpricot'
 
 group :development do
   gem 'sqlite3'
