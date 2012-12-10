@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205160407) do
+ActiveRecord::Schema.define(:version => 20121210010221) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20121205160407) do
     t.string   "picture"
     t.date     "expiration"
     t.string   "url"
-    t.string   "type"
+    t.string   "deal_type"
     t.float    "price"
     t.float    "savings"
     t.string   "location"

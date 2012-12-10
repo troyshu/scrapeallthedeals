@@ -1,2 +1,48 @@
-<h1>StaticPages#scrape</h1>
-<p>Find me in app/views/static_pages/scrape.html.erb</p>
+
+<h1>Listing deals</h1>
+
+<%= form_tag do %>
+
+<table>
+  <tr>
+  	<th>Adventure</th>
+    <th>External</th>
+    <th>Site</th>
+    <th>Name</th>
+    <th>Headline</th>
+    <th>Picture</th>
+    <th>Expiration</th>
+    <th>Url</th>
+    <th>Deal Type</th>
+    <th>Price</th>
+    <th>Savings</th>
+    <th>Location</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dealsArray.each do |deal| %>
+  <tr>
+  	<td><%= check_box_tag "#{deal.external_id}_#{deal.site}" %></td>
+    <td><%= deal.external_id %></td>
+    <td><%= deal.site %></td>
+    <td><%= deal.name %></td>
+    <td><%= deal.headline %></td>
+    <td><%= deal.picture %></td>
+    <td><%= deal.expiration %></td>
+    <td><%= link_to "deal url", deal.url, :target=>"_blank" %></td>
+    <td><%= deal.deal_type %></td>
+    <td><%= deal.price %></td>
+    <td><%= deal.savings %></td>
+    <td><%= deal.location %></td>
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= submit_tag("Update") %>
+
+<% end %>

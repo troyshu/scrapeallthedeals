@@ -6,6 +6,7 @@ gem 'hpricot'
 
 group :development do
   gem 'sqlite3'
+  gem 'annotate'
 end
 
 

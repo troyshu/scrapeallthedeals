@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"exter",
+				"external_id"
+			],
+			[
+				"si",
+				"site"
+			],
+			[
 				"rolling",
 				"rolling_mean_volume"
 			],
@@ -187,6 +195,46 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Gemfile",
+			"settings":
+			{
+				"buffer_size": 356,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/routes.rb",
+			"settings":
+			{
+				"buffer_size": 1905,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/static_pages_controller.rb",
+			"settings":
+			{
+				"buffer_size": 1708,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/helpers/static_pages_helper.rb",
+			"settings":
+			{
+				"buffer_size": 102,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/deal.rb",
+			"settings":
+			{
+				"buffer_size": 632,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -220,6 +268,8 @@
 	},
 	"file_history":
 	[
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160407_create_deals.rb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160026_create_deals.rb",
 		"/home/troyshu/quant_finance/open_day_range/openDayRangeStats.py",
 		"/home/troyshu/rails_projects/habitxter/db/migrate/20121122123319_add_reminder_time_to_habit.rb",
 		"/home/troyshu/rails_projects/habitxter/db/migrate/20121122130413_add_phone_number_to_user.rb",
@@ -345,9 +395,7 @@
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/stylesheets/tipsy.css",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/javascripts/jquery.tipsy.js",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/public/tinybox_style.css",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/log/development.log",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/users/edit.html.erb",
-		"/home/troyshu/rails_projects/pomodoro/resources/tinybox2/index.html"
+		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/log/development.log"
 	],
 	"find":
 	{
@@ -449,8 +497,142 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Gemfile",
+					"settings":
+					{
+						"buffer_size": 356,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								128,
+								128
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "config/routes.rb",
+					"settings":
+					{
+						"buffer_size": 1905,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								336,
+								336
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/controllers/static_pages_controller.rb",
+					"settings":
+					{
+						"buffer_size": 1708,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1632,
+								1632
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 582.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/helpers/static_pages_helper.rb",
+					"settings":
+					{
+						"buffer_size": 102,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								92,
+								92
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/models/deal.rb",
+					"settings":
+					{
+						"buffer_size": 632,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

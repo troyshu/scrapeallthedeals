@@ -6,7 +6,7 @@ Scrapeallthedeals::Application.routes.draw do
   get "static_pages/help"
 
   get "static_pages/scrape"
-
+  post "static_pages/scrape"
 
 
   # The priority is based upon order of creation:
