@@ -11,3 +11,12 @@
  *= require_self
  *= require_tree .
  */
+
+body {
+	font-family: "adelle",serif;
+	font-style: normal;
+	font-weight: 400;
+	
+	
+	background: url("fondo.png");
+}
