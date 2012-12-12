@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"extern",
+				"external_id"
+			],
+			[
 				"exter",
 				"external_id"
 			],
@@ -207,7 +211,7 @@
 			"file": "config/routes.rb",
 			"settings":
 			{
-				"buffer_size": 1905,
+				"buffer_size": 1933,
 				"line_ending": "Unix"
 			}
 		},
@@ -215,7 +219,7 @@
 			"file": "app/controllers/static_pages_controller.rb",
 			"settings":
 			{
-				"buffer_size": 1708,
+				"buffer_size": 2494,
 				"line_ending": "Unix"
 			}
 		},
@@ -223,7 +227,7 @@
 			"file": "app/helpers/static_pages_helper.rb",
 			"settings":
 			{
-				"buffer_size": 102,
+				"buffer_size": 275,
 				"line_ending": "Unix"
 			}
 		},
@@ -232,6 +236,38 @@
 			"settings":
 			{
 				"buffer_size": 632,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "log/development.log",
+			"settings":
+			{
+				"buffer_size": 861052,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/static_pages/scrape.html.erb",
+			"settings":
+			{
+				"buffer_size": 944,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/deals/index.html.erb",
+			"settings":
+			{
+				"buffer_size": 479,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/stylesheets/deals.css.scss",
+			"settings":
+			{
+				"buffer_size": 280,
 				"line_ending": "Unix"
 			}
 		}
@@ -268,6 +304,8 @@
 	},
 	"file_history":
 	[
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121210010221_rename_type_column.rb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/development.sqlite3",
 		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160407_create_deals.rb",
 		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160026_create_deals.rb",
 		"/home/troyshu/quant_finance/open_day_range/openDayRangeStats.py",
@@ -393,9 +431,7 @@
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/layouts/_header.html.erb",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/public/premiumonly.html",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/stylesheets/tipsy.css",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/javascripts/jquery.tipsy.js",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/public/tinybox_style.css",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/log/development.log"
+		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/javascripts/jquery.tipsy.js"
 	],
 	"find":
 	{
@@ -497,7 +533,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -531,15 +567,15 @@
 					"file": "config/routes.rb",
 					"settings":
 					{
-						"buffer_size": 1905,
+						"buffer_size": 1933,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								336,
-								336
+								154,
+								154
 							]
 						],
 						"settings":
@@ -559,24 +595,25 @@
 					"file": "app/controllers/static_pages_controller.rb",
 					"settings":
 					{
-						"buffer_size": 1708,
+						"buffer_size": 2494,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1632,
-								1632
+								2399,
+								2399
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"translate_tabs_to_spaces": false,
 							"word_wrap": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 582.0,
+						"translation.y": 360.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -586,20 +623,21 @@
 					"file": "app/helpers/static_pages_helper.rb",
 					"settings":
 					{
-						"buffer_size": 102,
+						"buffer_size": 275,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								92,
-								92
+								81,
+								81
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -626,6 +664,116 @@
 						"settings":
 						{
 							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "log/development.log",
+					"settings":
+					{
+						"buffer_size": 861052,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 341687.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/views/static_pages/scrape.html.erb",
+					"settings":
+					{
+						"buffer_size": 944,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								726,
+								726
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 216.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/views/deals/index.html.erb",
+					"settings":
+					{
+						"buffer_size": 479,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								190,
+								190
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/assets/stylesheets/deals.css.scss",
+					"settings":
+					{
+						"buffer_size": 280,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								253,
+								253
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SASS/Syntaxes/SASS.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -696,6 +844,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 205.0,
+	"side_bar_width": 163.0,
 	"status_bar_visible": true
 }

@@ -1,43 +1,28 @@
 <h1>Listing deals</h1>
 
-<table>
-  <tr>
-    <th>External</th>
-    <th>Site</th>
-    <th>Name</th>
-    <th>Headline</th>
-    <th>Picture</th>
-    <th>Expiration</th>
-    <th>Url</th>
-    <th>Type</th>
-    <th>Price</th>
-    <th>Savings</th>
-    <th>Location</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
 <% @deals.each do |deal| %>
-  <tr>
-    <td><%= deal.external_id %></td>
-    <td><%= deal.site %></td>
-    <td><%= deal.name %></td>
-    <td><%= deal.headline %></td>
-    <td><%= deal.picture %></td>
-    <td><%= deal.expiration %></td>
-    <td><%= deal.url %></td>
-    <td><%= deal.type %></td>
-    <td><%= deal.price %></td>
-    <td><%= deal.savings %></td>
-    <td><%= deal.location %></td>
-    <td><%= link_to 'Show', deal %></td>
-    <td><%= link_to 'Edit', edit_deal_path(deal) %></td>
-    <td><%= link_to 'Destroy', deal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<div class="deal_class">
+    
+    <div class="deal_picture">
+        <%= link_to image_tag("#{deal.picture}"), deal.url, :target=>"_blank" %> 
+    </div>
+    <div class="deal_name">
+        <%= deal.name %>
+    </div>
+    <div class="deal_headline">
+        <%= link_to "#{deal.headline}",deal.url, :target=>"_blank" %>
+    </div>
+    <div class="deal_location">
+        <%= deal.location %>
+    </div>
+    <div class="deal_price">
+        $<%= deal.price %>
+    </div>
+</div>
+
 <% end %>
-</table>
+
 
 <br />
 
-<%= link_to 'New Deal', new_deal_path %>
