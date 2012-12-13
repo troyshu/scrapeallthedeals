@@ -87,10 +87,7 @@ class StaticPagesController < ApplicationController
 				end
 			end
 
-			#THEN, save all deals do the training deals table
-			@dealsArray.each do |deal|
-				
-			end
+			
 		end
 
 	end
