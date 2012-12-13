@@ -2,6 +2,11 @@
 
 <table>
   <tr>
+    <th>Deal</th>
+    <th>Deal type</th>
+    <th>Deal headline</th>
+    <th>Url</th>
+    <th>Trained</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,6 +14,11 @@
 
 <% @training_deals.each do |training_deal| %>
   <tr>
+    <td><%= training_deal.deal_id %></td>
+    <td><%= training_deal.deal_type %></td>
+    <td><%= training_deal.deal_headline %></td>
+    <td><%= training_deal.url %></td>
+    <td><%= training_deal.trained %></td>
     <td><%= link_to 'Show', training_deal %></td>
     <td><%= link_to 'Edit', edit_training_deal_path(training_deal) %></td>
     <td><%= link_to 'Destroy', training_deal, method: :delete, data: { confirm: 'Are you sure?' } %></td>

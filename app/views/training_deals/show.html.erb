@@ -1,5 +1,30 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Deal:</b>
+  <%= @training_deal.deal_id %>
+</p>
+
+<p>
+  <b>Deal type:</b>
+  <%= @training_deal.deal_type %>
+</p>
+
+<p>
+  <b>Deal headline:</b>
+  <%= @training_deal.deal_headline %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @training_deal.url %>
+</p>
+
+<p>
+  <b>Trained:</b>
+  <%= @training_deal.trained %>
+</p>
+
 
 <%= link_to 'Edit', edit_training_deal_path(@training_deal) %> |
 <%= link_to 'Back', training_deals_path %>

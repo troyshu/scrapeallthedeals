@@ -18,7 +18,7 @@ class TrainingDealsControllerTest < ActionController::TestCase
 
   test "should create training_deal" do
     assert_difference('TrainingDeal.count') do
-      post :create, training_deal: {  }
+      post :create, training_deal: { deal_headline: @training_deal.deal_headline, deal_id: @training_deal.deal_id, deal_type: @training_deal.deal_type, trained: @training_deal.trained, url: @training_deal.url }
     end
 
     assert_redirected_to training_deal_path(assigns(:training_deal))
@@ -35,7 +35,7 @@ class TrainingDealsControllerTest < ActionController::TestCase
   end
 
   test "should update training_deal" do
-    put :update, id: @training_deal, training_deal: {  }
+    put :update, id: @training_deal, training_deal: { deal_headline: @training_deal.deal_headline, deal_id: @training_deal.deal_id, deal_type: @training_deal.deal_type, trained: @training_deal.trained, url: @training_deal.url }
     assert_redirected_to training_deal_path(assigns(:training_deal))
   end
 
