@@ -86,8 +86,22 @@ class StaticPagesController < ApplicationController
 					deal.save
 				end
 			end
-
 			
+			#THEN, save all deals do the training deals table
+			@dealsArray.each do |deal|
+				#first, only add deal to training deal if it isn't already in the trainingdeal table
+				if TrainingDeal.find_by_deal_id(deal.external_id)==nil
+					training_deal = TrainingDeal.new do |d| 
+						d.deal_id = deal.external_id
+						d.deal_headline = deal.headline
+						d.deal_type = deal.deal_type
+						d.url = deal.url
+						d.trained = False
+					end
+					training_deal.save
+				end
+			end
+
 		end
 
 	end
