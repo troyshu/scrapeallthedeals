@@ -41,14 +41,14 @@ class StaticPagesController < ApplicationController
 			#deal_type = "adventure"
 			external_id = deal['dealid']
 
-			logger.debug("name: #{name}")
-			logger.debug("headline: #{headline}")
-			logger.debug("price: #{price}")
-			logger.debug("location: #{location}")
-			logger.debug("site: #{site}");
-			logger.debug("picture: #{picture}")
-			logger.debug("url: #{url}")
-			logger.debug("external_id: #{external_id}")
+			#logger.debug("name: #{name}")
+			#logger.debug("headline: #{headline}")
+			#logger.debug("price: #{price}")
+			#logger.debug("location: #{location}")
+			#logger.debug("site: #{site}");
+			#logger.debug("picture: #{picture}")
+			#logger.debug("url: #{url}")
+			#logger.debug("external_id: #{external_id}")
 
 			deal = Deal.new do |d| 
 				d.name = name
@@ -68,7 +68,16 @@ class StaticPagesController < ApplicationController
 			#save deal in temporary array
 			@dealsArray.push(deal)
 		end
+		
+		#GROUPON
+		page=agent.get("http://www.groupon.com/browse/miami")
+		response = page.content
+		doc = Hpricot(response)
 
+
+
+
+		#POST request (update button click): save selected deals
 		if request.post?
 			#logger.debug("post. params #{params}")
 			#loop through deals, checking to see if checkbox is checked

@@ -7,7 +7,12 @@ class DealsController < ApplicationController
     if params[:deal_type] and params[:static_location]
       @deals = Deal.where :deal_type=>params[:deal_type], :static_location=>params[:static_location]
     else
-      @deals = Deal.all
+      #@deals = Deal.all
+      #for now, redirect all index requests to miami/adventure
+      params[:deal_type] = "adventure"
+      params[:static_location] = "miami"
+      @deals = Deal.where :deal_type=>params[:deal_type], :static_location=>params[:static_location]
+
     end
 
     @deal_type = params[:deal_type]

@@ -1,6 +1,8 @@
 Scrapeallthedeals::Application.routes.draw do
   resources :deals
 
+  root :to => 'deals#index' #MVP, for now...
+
   get "static_pages/home"
 
   get "static_pages/help"
@@ -11,7 +13,7 @@ Scrapeallthedeals::Application.routes.draw do
 
   match 'deals/:static_location/:deal_type' => 'deals#index'
 
-  
+
 
 
   # The priority is based upon order of creation:
