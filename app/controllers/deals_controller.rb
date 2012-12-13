@@ -2,7 +2,15 @@ class DealsController < ApplicationController
   # GET /deals
   # GET /deals.json
   def index
-    @deals = Deal.all
+    
+
+    if params[:deal_type]
+      @deals = Deal.where :deal_type=>params[:deal_type]
+    else
+      @deals = Deal.all
+    end
+
+    @deal_type = params[:deal_type]
 
     respond_to do |format|
       format.html # index.html.erb

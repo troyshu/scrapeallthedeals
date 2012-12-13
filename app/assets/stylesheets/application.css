@@ -12,6 +12,32 @@
  *= require_tree .
  */
 
+
+
+
+/* header */
+* {
+	margin:0;
+	padding:0;
+}
+
+.container {
+	margin:20px;
+}
+
+.header_bar {
+	background:#FF4500;
+	padding:10px;
+}
+
+.header_bar #logo {
+	font-size:20px;
+	font-weight:bold;
+	color:white;
+	text-decoration: none;
+	text-shadow: -1px -1px 0px rgba(150, 150, 150, 0.5);
+}
+
 body {
 	font-family: "adelle",serif;
 	font-style: normal;
@@ -19,4 +45,47 @@ body {
 	
 	
 	background: url("fondo.png");
+}
+
+/* footer */
+
+footer {
+  clear:both;
+  padding-top: 50px;
+  padding-left:10px;
+  padding-right:10px;
+  border-top: 1px solid #eaeaea;
+  color: #999;
+}
+
+footer a {
+  color: #555;
+}  
+
+footer a:hover { 
+  color: #222;
+}
+
+footer small {
+  float: left;
+}
+
+footer ul {
+  float: right;
+  list-style: none;
+}
+
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
 }

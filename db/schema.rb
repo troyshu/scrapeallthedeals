@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210010221) do
+ActiveRecord::Schema.define(:version => 20121213001821) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20121210010221) do
     t.float    "price"
     t.float    "savings"
     t.string   "location"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "static_location"
   end
 
 end

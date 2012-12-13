@@ -11,15 +11,20 @@ class StaticPagesController < ApplicationController
 
 
   def scrape
-	
+		#first, delete all deals
+		Deal.delete_all
 
 
 	  	#xpath for a living social deal:
 	  	#/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class='ls-item deal']
 
+		#MIAMI
+	  	static_location = "miami"
+
 	  	#LIVINGSOCIAL
+
 		agent = Mechanize.new
-		page = agent.get('http://www.livingsocial.com/cities/4-los-angeles')
+		page = agent.get('http://www.livingsocial.com/cities/43-miami')
 		response = page.content
 		doc = Hpricot(response)
 		deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']")
@@ -54,6 +59,7 @@ class StaticPagesController < ApplicationController
 				d.url = url
 				#d.deal_type = deal_type
 				d.external_id = external_id
+				d.static_location = static_location
 			end
 			#deal.save
 			#logger.debug("saved Deal #{deal.id}")

@@ -8,6 +8,8 @@ Scrapeallthedeals::Application.routes.draw do
   get "static_pages/scrape"
   post "static_pages/scrape"
 
+  match 'deals/type/:deal_type' => 'deals#index'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
