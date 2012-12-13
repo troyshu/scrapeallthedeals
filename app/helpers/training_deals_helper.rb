@@ -1,0 +1,2 @@
+module TrainingDealsHelper
+end

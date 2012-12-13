@@ -1,4 +1,6 @@
 Scrapeallthedeals::Application.routes.draw do
+  resources :training_deals
+
   resources :deals
 
   root :to => 'deals#index' #MVP, for now...
