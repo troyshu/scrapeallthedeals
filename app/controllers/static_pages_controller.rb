@@ -69,10 +69,6 @@ class StaticPagesController < ApplicationController
 			@dealsArray.push(deal)
 		end
 		
-		#GROUPON
-		page=agent.get("http://www.groupon.com/browse/miami")
-		response = page.content
-		doc = Hpricot(response)
 
 
 

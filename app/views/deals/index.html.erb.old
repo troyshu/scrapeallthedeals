@@ -25,7 +25,16 @@
         $<%= deal.price %>
     </div>
     
+    <div class="deal_site">
+        <% if deal.site=="livingsocial" %>
+            <%= content_tag(:span,deal.site, :class=>"livingsocial") %>
+        <% elsif deal.site=="groupon" %>
+            <%= content_tag(:span,deal.site, :class=>"groupon") %>
+        <% elsif deal.site=="google offers" %>
+            <%= content_tag(:span,deal.site, :class=>"google-offers") %>
+        <% end %>  
 
+    </div>
 </div>
 
 <% end %>

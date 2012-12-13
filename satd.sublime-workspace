@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"stat",
+				"static_location"
+			],
+			[
 				"extern",
 				"external_id"
 			],
@@ -200,18 +204,10 @@
 	"buffers":
 	[
 		{
-			"file": "Gemfile",
-			"settings":
-			{
-				"buffer_size": 356,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "config/routes.rb",
 			"settings":
 			{
-				"buffer_size": 1933,
+				"buffer_size": 2085,
 				"line_ending": "Unix"
 			}
 		},
@@ -219,7 +215,7 @@
 			"file": "app/controllers/static_pages_controller.rb",
 			"settings":
 			{
-				"buffer_size": 2494,
+				"buffer_size": 3062,
 				"line_ending": "Unix"
 			}
 		},
@@ -243,7 +239,7 @@
 			"file": "log/development.log",
 			"settings":
 			{
-				"buffer_size": 861052,
+				"buffer_size": 1240524,
 				"line_ending": "Unix"
 			}
 		},
@@ -256,18 +252,67 @@
 			}
 		},
 		{
-			"file": "app/views/deals/index.html.erb",
+			"file": "app/assets/stylesheets/deals.css.scss",
 			"settings":
 			{
-				"buffer_size": 479,
+				"buffer_size": 580,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/assets/stylesheets/deals.css.scss",
+			"file": "app/assets/stylesheets/application.css",
 			"settings":
 			{
-				"buffer_size": 280,
+				"buffer_size": 1401,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/layouts/application.html.erb",
+			"settings":
+			{
+				"buffer_size": 569,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/layouts/_footer.html.erb",
+			"settings":
+			{
+				"buffer_size": 253,
+				"line_ending": "Unix",
+				"name": "<footer class=\"footer\">"
+			}
+		},
+		{
+			"file": "app/controllers/deals_controller.rb",
+			"settings":
+			{
+				"buffer_size": 2366,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/deals/index.html.erb",
+			"settings":
+			{
+				"buffer_size": 1063,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "db/migrate/20121213001821_add_static_location_to_deals.rb",
+			"settings":
+			{
+				"buffer_size": 128,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Gemfile",
+			"settings":
+			{
+				"buffer_size": 370,
 				"line_ending": "Unix"
 			}
 		}
@@ -304,9 +349,15 @@
 	},
 	"file_history":
 	[
-		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121210010221_rename_type_column.rb",
-		"/home/troyshu/rails_projects/scrapeallthedeals/db/development.sqlite3",
+		"/home/troyshu/rails_projects/scrapeallthedeals/Gemfile",
 		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160407_create_deals.rb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121210010221_rename_type_column.rb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/app/views/deals/index.html.erb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/app/views/layouts/_header.html.erb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/app/views/layouts/_shim.html.erb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/app/views/layouts/application.html.erb",
+		"/home/troyshu/rails_projects/scrapeallthedeals/app/assets/stylesheets/scaffolds.css.scss",
+		"/home/troyshu/rails_projects/scrapeallthedeals/db/development.sqlite3",
 		"/home/troyshu/rails_projects/scrapeallthedeals/db/migrate/20121205160026_create_deals.rb",
 		"/home/troyshu/quant_finance/open_day_range/openDayRangeStats.py",
 		"/home/troyshu/rails_projects/habitxter/db/migrate/20121122123319_add_reminder_time_to_habit.rb",
@@ -425,13 +476,7 @@
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/static_pages/timer.html.erb",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/static_pages/pricing.html.erb",
 		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/controllers/pomodoros_controller.rb",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/pomodoros/create.html.erb",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/static_pages/contact.html.erb",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/users/new.html.erb",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/layouts/_header.html.erb",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/public/premiumonly.html",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/stylesheets/tipsy.css",
-		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/assets/javascripts/jquery.tipsy.js"
+		"/home/troyshu/rails_projects/pomodoro/pomodoro_app/app/views/pomodoros/create.html.erb"
 	],
 	"find":
 	{
@@ -533,49 +578,23 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 13,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Gemfile",
-					"settings":
-					{
-						"buffer_size": 356,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								128,
-								128
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "config/routes.rb",
 					"settings":
 					{
-						"buffer_size": 1933,
+						"buffer_size": 2085,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								154,
-								154
+								92,
+								92
 							]
 						],
 						"settings":
@@ -591,19 +610,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "app/controllers/static_pages_controller.rb",
 					"settings":
 					{
-						"buffer_size": 2494,
+						"buffer_size": 3062,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2399,
-								2399
+								2708,
+								2708
 							]
 						],
 						"settings":
@@ -613,13 +632,13 @@
 							"word_wrap": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 360.0,
+						"translation.y": 1332.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "app/helpers/static_pages_helper.rb",
 					"settings":
 					{
@@ -646,7 +665,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "app/models/deal.rb",
 					"settings":
 					{
@@ -672,11 +691,11 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "log/development.log",
 					"settings":
 					{
-						"buffer_size": 861052,
+						"buffer_size": 1240524,
 						"regions":
 						{
 						},
@@ -694,13 +713,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 341687.0,
+						"translation.y": 387558.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "app/views/static_pages/scrape.html.erb",
 					"settings":
 					{
@@ -722,31 +741,110 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 216.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "app/views/deals/index.html.erb",
+					"buffer": 6,
+					"file": "app/assets/stylesheets/deals.css.scss",
 					"settings":
 					{
-						"buffer_size": 479,
+						"buffer_size": 580,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								190,
-								190
+								575,
+								575
 							]
 						],
 						"settings":
 						{
+							"syntax": "Packages/SASS/Syntaxes/SASS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/assets/stylesheets/application.css",
+					"settings":
+					{
+						"buffer_size": 1401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								978,
+								978
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/views/layouts/application.html.erb",
+					"settings":
+					{
+						"buffer_size": 569,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								504,
+								504
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/views/layouts/_footer.html.erb",
+					"settings":
+					{
+						"buffer_size": 253,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								234,
+								234
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<footer class=\"footer\">",
 							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -756,24 +854,106 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "app/assets/stylesheets/deals.css.scss",
+					"buffer": 10,
+					"file": "app/controllers/deals_controller.rb",
 					"settings":
 					{
-						"buffer_size": 280,
+						"buffer_size": 2366,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								253,
-								253
+								430,
+								430
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SASS/Syntaxes/SASS.tmLanguage"
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "app/views/deals/index.html.erb",
+					"settings":
+					{
+						"buffer_size": 1063,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1022,
+								1022
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "db/migrate/20121213001821_add_static_location_to_deals.rb",
+					"settings":
+					{
+						"buffer_size": 128,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								127,
+								127
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Gemfile",
+					"settings":
+					{
+						"buffer_size": 370,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								332,
+								332
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -844,6 +1024,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 163.0,
+	"side_bar_width": 266.0,
 	"status_bar_visible": true
 }
