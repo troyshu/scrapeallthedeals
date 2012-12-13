@@ -73,6 +73,7 @@ class StaticPagesController < ApplicationController
 
 
 
+
 		#POST request (update button click): save selected deals
 		if request.post?
 			#logger.debug("post. params #{params}")
@@ -84,6 +85,11 @@ class StaticPagesController < ApplicationController
 					#save deal in database
 					deal.save
 				end
+			end
+
+			#THEN, save all deals do the training deals table
+			@dealsArray.each do |deal|
+				
 			end
 		end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213001821) do
+ActiveRecord::Schema.define(:version => 20121213222114) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(:version => 20121213001821) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "static_location"
+  end
+
+  create_table "training_deals", :force => true do |t|
+    t.integer  "deal_id"
+    t.string   "deal_type"
+    t.string   "deal_headline"
+    t.string   "url"
+    t.boolean  "trained"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end
