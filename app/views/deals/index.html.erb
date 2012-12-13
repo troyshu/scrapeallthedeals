@@ -1,4 +1,9 @@
-<h1><%= @deal_type %></h1>
+<h1><%= @static_location.capitalize %></h1>
+<h2>
+    <% if @deal_type %>
+    <%= @deal_type.capitalize %> Deals
+    <% end %>
+</h2>
 
 
 <% @deals.each do |deal| %>

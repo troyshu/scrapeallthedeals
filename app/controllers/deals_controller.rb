@@ -4,13 +4,14 @@ class DealsController < ApplicationController
   def index
     
 
-    if params[:deal_type]
-      @deals = Deal.where :deal_type=>params[:deal_type]
+    if params[:deal_type] and params[:static_location]
+      @deals = Deal.where :deal_type=>params[:deal_type], :static_location=>params[:static_location]
     else
       @deals = Deal.all
     end
 
     @deal_type = params[:deal_type]
+    @static_location = params[:static_location]
 
     respond_to do |format|
       format.html # index.html.erb

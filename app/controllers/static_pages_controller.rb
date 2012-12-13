@@ -27,7 +27,8 @@ class StaticPagesController < ApplicationController
 		page = agent.get('http://www.livingsocial.com/cities/43-miami')
 		response = page.content
 		doc = Hpricot(response)
-		deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']")
+		#deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']") #los angeles
+		deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']") #miami
 		@dealsArray = []
 		deals.each do |deal|
 			name = (deal/"/div[@class='bd']/h1")[0].innerHTML
@@ -40,14 +41,14 @@ class StaticPagesController < ApplicationController
 			#deal_type = "adventure"
 			external_id = deal['dealid']
 
-			#logger.debug("name: #{name}")
-			#logger.debug("headline: #{headline}")
-			#logger.debug("price: #{price}")
-			#logger.debug("location: #{location}")
-			#logger.debug("site: #{site}");
-			#logger.debug("picture: #{picture}")
-			#logger.debug("url: #{url}")
-			#logger.debug("external_id: #{external_id}")
+			logger.debug("name: #{name}")
+			logger.debug("headline: #{headline}")
+			logger.debug("price: #{price}")
+			logger.debug("location: #{location}")
+			logger.debug("site: #{site}");
+			logger.debug("picture: #{picture}")
+			logger.debug("url: #{url}")
+			logger.debug("external_id: #{external_id}")
 
 			deal = Deal.new do |d| 
 				d.name = name
