@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: word_counts
+#
+#  id         :integer          not null, primary key
+#  word       :string(255)
+#  category   :string(255)
+#  count      :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  word: MyString
+  category: MyString
+  count: 1
+
+two:
+  word: MyString
+  category: MyString
+  count: 1

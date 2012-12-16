@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213224027) do
+ActiveRecord::Schema.define(:version => 20121216222051) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -43,5 +43,13 @@ ActiveRecord::Schema.define(:version => 20121213224027) do
   end
 
   add_index "training_deals", ["deal_id"], :name => "index_training_deals_on_deal_id"
+
+  create_table "word_counts", :force => true do |t|
+    t.string   "word"
+    t.string   "category"
+    t.integer  "count"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

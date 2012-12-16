@@ -9,7 +9,17 @@ class StaticPagesController < ApplicationController
   def help
   end
 
-
+  def popoulate_bag_of_words
+	#loop through all deals in TrainingDeals
+	#for each deal, go to the url
+		#get current category
+		#scrape description of deal
+		#tokenize words, aggregate counts
+		#check bag of words/word count database for existing key [word, category]
+		#if the key doesn't exist, add it to the database
+		#if the key already exists, add it to the entry that already exists
+  end	
+  
   def scrape
 		#first, delete all deals
 		Deal.delete_all

@@ -1,4 +1,6 @@
 Scrapeallthedeals::Application.routes.draw do
+  resources :word_counts
+
   resources :training_deals
 
   resources :deals
