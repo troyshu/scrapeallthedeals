@@ -96,7 +96,7 @@ class StaticPagesController < ApplicationController
 						d.deal_headline = deal.headline
 						d.deal_type = deal.deal_type
 						d.url = deal.url
-						d.trained = False
+						d.trained = false
 					end
 					training_deal.save
 				end
