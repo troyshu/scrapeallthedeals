@@ -9,6 +9,75 @@ class StaticPagesController < ApplicationController
   def help
   end
 
+  def get_category_scores(text, probability_map)
+	#text: a list of words in document
+
+	categories = probability_map.keys()
+	category_scores = {}
+	categories.each do |category|
+		freq_probabilities = probability_map[category] #word->probability (given category)
+		sum=0
+		test_words.each do |word| #so for each word in the test document
+			probability = freq_probabilities[word]
+			sum += Math::log(probability)
+		end
+		category_scores[category]=sum
+	end
+
+	return category_scores #the scores that are larger (less negative) are the highest likelihood categories
+
+  end
+	
+  def calculate_nb_probabilities(text)
+	#text: a list of words in document
+
+	#get deal categories/deal_type
+	categories = []
+
+	TrainingDeal.select("DISTINCT(deal_type)").each do |type|
+		categories.append(type.deal_type)
+	end
+	
+	nb_probability_map = {}
+	#for each category
+	categories.each do |category|
+		#create a frequency probability map: word->probability
+		probability_map = {}
+		test_words.each do |word|
+			if !probability_map.keys().include? word
+				#calculate the frequency probability of current word
+				#don't forget to laplace smooth
+
+				#numerator: smoothed frequency of current word given category
+				if WordCount.where(:word=>word, :category=>category).count==0
+					numerator = 1
+				else
+					numerator = WordCount.where(:word=>word, :category=>category)[0].count.to_f+1
+				end
+
+				#get total frequency of all words given current category
+				total_words_given_cat = 0
+				all_word_counts = WordCount.where(:category=>category)
+
+				all_word_counts.each do |word_count|
+					total_words_given_cat += word_count.count
+				end
+				#denominator: smoothed frequency of all words given category
+				denominator = total_words_given_cat + all_word_counts.count
+				denominator = denominator.to_f
+
+				probability = numerator/denominator
+				probability_map[word]=probability
+			end
+		end
+		#store this probability map into nb probabilities map
+		nb_probability_map[category] = probability_map
+	end
+	return nb_probability_map
+  end
+
+
+
   def delete_bag_of_words
 	#delete word counts
 	WordCount.delete_all
