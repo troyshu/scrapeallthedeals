@@ -150,8 +150,7 @@ class StaticPagesController < ApplicationController
   end	
   
   def scrape
-		#first, delete all deals
-		Deal.delete_all
+		
 
 
 	  	#xpath for a living social deal:
@@ -209,14 +208,66 @@ class StaticPagesController < ApplicationController
 		end
 		
 
+		#if it's a GET request (i.e. we just want to see what deals we scrape), do the Naive Bayes prediction
+		if request.get?
+			#for each deal
+			@dealsArray.each do |deal|
+				deal_url = deal.url
+				begin
+					page = agent.get(deal_url)
+					response = page.content
+					doc = Hpricot(response)
+				rescue => ex
+					logger.debug("ERROR while scraping url for description in category prediction: #{ex.message}")
+					next
+				end
 
+				desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
 
+				full_description = ""
+
+				desc.each do |desc_subsection|
+					full_description += desc_subsection.inner_text
+				end
+
+				#clean description
+				#remove \n, \r, bullets (•)
+				full_description.squish!()
+				#full_description.tr!('•','') #character not allowed...
+					
+				#tokenize words, (also, at the same time remove all punctuation)
+				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+
+				#calculate frequency probabilities, then get most likely categories
+				nb_probabilities = calculate_nb_probabilities(words)
+				category_scores = get_category_scores(words,nb_probabilities)
+				
+
+				#find most likely category
+				most_likely_category = nil
+				max_score = -9999
+				category_scores.keys().each do |category|
+					if category_scores[category] > max_score
+						max_score=category_scores[category]
+						most_likely_category = category
+					end
+				end
+
+				deal.predicted_deal_type = category
+
+			end
+		end
 
 
 		#POST request (update button click): save selected deals
 		if request.post?
+
+			#first, delete all old
+			Deal.delete_all
+
 			#logger.debug("post. params #{params}")
-			#loop through deals, checking to see if checkbox is checked
+			#loop through deals, checking to see if adventure checkbox is checked
+			#TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked
 			@dealsArray.each do |deal|
 				if params["#{deal.external_id}_#{deal.site}"]=="1"
 					#set deal type to adventure
