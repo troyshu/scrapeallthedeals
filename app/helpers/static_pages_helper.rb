@@ -10,4 +10,16 @@ module StaticPagesHelper
 		#get rid of whitespace
 		return location_str.strip
 	end
+
+	def getWordFrequencyDict(words)
+		wordDict = {}
+		words.each do |word|
+			if wordDict.keys().include? word
+				wordDict[word]=wordDict[word]+1
+			else
+				wordDict[word]=1
+			end
+		end
+		return wordDict
+	end
 end

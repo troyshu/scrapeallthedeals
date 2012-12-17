@@ -15,6 +15,8 @@ Scrapeallthedeals::Application.routes.draw do
   post "static_pages/scrape"
   match '/scrape' =>'static_pages#scrape'
 
+  match '/populatebow' =>'static_pages#populate_bag_of_words'
+
   match 'deals/:static_location/:deal_type' => 'deals#index'
 
 
