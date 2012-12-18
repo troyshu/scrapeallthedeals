@@ -124,6 +124,10 @@ class StaticPagesController < ApplicationController
 		end
 	end
 
+	#smallest size multipler: we may not want the categories to be exactly equal...
+	size_multiplier = 1.5
+	smallest_size *= size_multiplier
+
 	logger.debug("smallest category is #{smallest_category} with #{smallest_size} trainingdeals")
 
 	#randomly select trainingdeals such that the number of training deals in each category are the same
@@ -142,7 +146,9 @@ class StaticPagesController < ApplicationController
 
 		#get current category
 		deal_category = training_deal.deal_type
-		#get headline and title
+
+		#TRAINING ON HEADLINE get headline and title
+
 		deal_headline = training_deal.deal_headline
 
 
@@ -152,6 +158,39 @@ class StaticPagesController < ApplicationController
 			
 		#tokenize words, (also, at the same time remove all punctuation)
 		words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+
+
+=begin
+		#TRAINING ON DEAL DESCRIPTION
+		#get url
+		deal_url = training_deal.url
+		#scrape description of deal
+		begin
+			page = agent.get(deal_url)
+			response = page.content
+			doc = Hpricot(response)
+		rescue => ex
+			logger.debug("ERROR while scraping url for word counts: #{ex.message}")
+			next
+		end
+
+		desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
+
+		full_description = ""
+
+		desc.each do |desc_subsection|
+			full_description += desc_subsection.inner_text
+		end
+
+		#clean description
+		#remove \n, \r, bullets (•)
+		full_description.squish!()
+		#full_description.tr!('•','') #character not allowed...
+			
+		#tokenize words, (also, at the same time remove all punctuation)
+		words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+=end
+
 
 		#aggregate word counts
 		word_freq = getWordFrequencyDict(words)
@@ -304,7 +343,8 @@ class StaticPagesController < ApplicationController
 			@dealsArray.each do |deal|
 
 
-				#alternative implementation: use deal headline
+				#alternative implementation: use deal HEADLINE
+
 				deal_headline = deal.headline
 
 				#clean headline
@@ -312,7 +352,7 @@ class StaticPagesController < ApplicationController
 				words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
 
 
-				#get the deal url (to get the deal description)
+				#get the deal url (to get the deal DESCRIPTION)
 =begin
 				deal_url = deal.url
 				begin
@@ -341,6 +381,8 @@ class StaticPagesController < ApplicationController
 				#tokenize words, (also, at the same time remove all punctuation)
 				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
 =end
+
+
 
 				#calculate frequency probabilities, then get most likely categories
 				nb_probabilities = calculate_nb_probabilities(words)
