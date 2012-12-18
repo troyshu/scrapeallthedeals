@@ -11,9 +11,16 @@ class StaticPagesController < ApplicationController
 
   def get_category_scores(text, probability_map)
 	#text: a list of words in document
+	test_words = text
 
 	categories = probability_map.keys()
 	category_scores = {}
+
+	priors = {}
+	categories.each do |category|
+		priors[category] = TrainingDeal.where(:deal_type=>category).count.to_f/TrainingDeal.count.to_f
+	end
+
 	categories.each do |category|
 		freq_probabilities = probability_map[category] #word->probability (given category)
 		sum=0
@@ -21,6 +28,10 @@ class StaticPagesController < ApplicationController
 			probability = freq_probabilities[word]
 			sum += Math::log(probability)
 		end
+
+		
+		sum+=Math::log(priors[category])
+
 		category_scores[category]=sum
 	end
 
@@ -30,6 +41,7 @@ class StaticPagesController < ApplicationController
 	
   def calculate_nb_probabilities(text)
 	#text: a list of words in document
+	test_words = text
 
 	#get deal categories/deal_type
 	categories = []
@@ -212,6 +224,8 @@ class StaticPagesController < ApplicationController
 		if request.get?
 			#for each deal
 			@dealsArray.each do |deal|
+
+				#get the deal url
 				deal_url = deal.url
 				begin
 					page = agent.get(deal_url)
@@ -222,6 +236,7 @@ class StaticPagesController < ApplicationController
 					next
 				end
 
+				#then get the deal description
 				desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
 
 				full_description = ""
@@ -253,7 +268,7 @@ class StaticPagesController < ApplicationController
 					end
 				end
 
-				deal.predicted_deal_type = category
+				deal.predicted_deal_type = most_likely_category
 
 			end
 		end
@@ -267,7 +282,7 @@ class StaticPagesController < ApplicationController
 
 			#logger.debug("post. params #{params}")
 			#loop through deals, checking to see if adventure checkbox is checked
-			#TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked
+			#!!!TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked. or some other way to get the predicted category type, without doing the whole naive bayes prediction again...
 			@dealsArray.each do |deal|
 				if params["#{deal.external_id}_#{deal.site}"]=="1"
 					#set deal type to adventure

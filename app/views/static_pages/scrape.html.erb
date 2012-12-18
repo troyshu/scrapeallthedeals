@@ -6,6 +6,7 @@
 <table>
   <tr>
   	<th>Adventure</th>
+    <th>Predicted Deal type</th>
     <th>External</th>
     <th>Site</th>
     <th>Name</th>
@@ -25,6 +26,7 @@
 <% @dealsArray.each do |deal| %>
   <tr>
   	<td><%= check_box_tag "#{deal.external_id}_#{deal.site}" %></td>
+    <td><%= deal.predicted_deal_type %></td>
     <td><%= deal.external_id %></td>
     <td><%= deal.site %></td>
     <td><%= deal.name %></td>

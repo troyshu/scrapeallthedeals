@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216222051) do
+ActiveRecord::Schema.define(:version => 20121217162318) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(:version => 20121216222051) do
     t.float    "price"
     t.float    "savings"
     t.string   "location"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "static_location"
+    t.string   "predicted_deal_type"
   end
 
   add_index "deals", ["external_id"], :name => "index_deals_on_external_id"
@@ -38,8 +39,9 @@ ActiveRecord::Schema.define(:version => 20121216222051) do
     t.string   "deal_headline"
     t.string   "url"
     t.boolean  "trained"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "predicted_deal_type"
   end
 
   add_index "training_deals", ["deal_id"], :name => "index_training_deals_on_deal_id"
