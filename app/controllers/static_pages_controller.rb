@@ -111,6 +111,52 @@ class StaticPagesController < ApplicationController
 
 		#get current category
 		deal_category = training_deal.deal_type
+		#get headline and title
+		deal_headline = training_deal.deal_headline
+
+
+		#clean headline
+		#remove \n, \r, bullets (•)
+		deal_headline.squish!()
+			
+		#tokenize words, (also, at the same time remove all punctuation)
+		words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+
+		#aggregate word counts
+		word_freq = getWordFrequencyDict(words)
+
+		#for each word count in current description
+		training_deal.update_attributes(:trained => true)
+
+		word_freq.keys().each do |word|
+			#check bag of words/word count database for existing key [word, category]
+			word_count_row = WordCount.where(:category => deal_category, :word => word).first
+			#if the key doesn't exist, add it to the database
+			if word_count_row == nil
+				WordCount.create(:word => word, :category => deal_category, :count => word_freq[word])
+			#if the key already exists, add(arithmetic) it to the entry that already exists
+			else
+				word_count_row.update_attributes(:count => (word_count_row.count+word_freq[word]))
+			end
+		end
+
+		logger.debug("TrainingDeal id #{training_deal.id} words counted in #{(Time.now-t)} seconds")
+	end
+  end
+
+=begin
+  def populate_bag_of_words
+  	agent = Mechanize.new
+
+	#loop through all UNTRAINED deals in TrainingDeals
+	#for each deal, go to the url
+	TrainingDeal.where(:trained => false).each do |training_deal|
+		
+		#timing purposes
+		t = Time.now
+
+		#get current category
+		deal_category = training_deal.deal_type
 		#get url
 		deal_url = training_deal.url
 		#scrape description of deal
@@ -160,7 +206,8 @@ class StaticPagesController < ApplicationController
 		logger.debug("TrainingDeal id #{training_deal.id} words counted in #{(Time.now-t)} seconds")
 	end
   end	
-  
+=end
+
   def scrape
 		
 
@@ -225,7 +272,17 @@ class StaticPagesController < ApplicationController
 			#for each deal
 			@dealsArray.each do |deal|
 
-				#get the deal url
+
+				#alternative implementation: use deal headline
+				deal_headline = deal.headline
+
+				#clean headline
+				deal_headline.squish!()
+				words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+
+
+				#get the deal url (to get the deal description)
+=begin
 				deal_url = deal.url
 				begin
 					page = agent.get(deal_url)
@@ -252,6 +309,7 @@ class StaticPagesController < ApplicationController
 					
 				#tokenize words, (also, at the same time remove all punctuation)
 				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+=end
 
 				#calculate frequency probabilities, then get most likely categories
 				nb_probabilities = calculate_nb_probabilities(words)
