@@ -18,7 +18,7 @@ class StaticPagesController < ApplicationController
 
 	priors = {}
 	categories.each do |category|
-		priors[category] = TrainingDeal.where(:deal_type=>category).count.to_f/TrainingDeal.count.to_f
+		priors[category] = TrainingDeal.where(:deal_type=>category, :trained=>true).count.to_f/TrainingDeal.count.to_f
 	end
 
 	categories.each do |category|
@@ -102,10 +102,41 @@ class StaticPagesController < ApplicationController
   def populate_bag_of_words
   	agent = Mechanize.new
 
+
+
+	#naive bayes COMPLEMENT logic
+	#get categories
+	#get deal categories/deal_type
+	categories = []
+
+	TrainingDeal.select("DISTINCT(deal_type)").each do |type|
+		categories.append(type.deal_type)
+	end
+
+	#find size of smallest category (ONLY count untrained deals)
+	smallest_size = 999
+	smallest_category = nil
+	categories.each do |category|
+		current_size = TrainingDeal.where(:deal_type => category, :trained=>false).count
+		if current_size < smallest_size
+			smallest_size=current_size
+			smallest_category = category
+		end
+	end
+
+	logger.debug("smallest category is #{smallest_category} with #{smallest_size} trainingdeals")
+
+	#randomly select trainingdeals such that the number of training deals in each category are the same
+	training_deals = []
+	categories.each do |category|
+		training_deals += TrainingDeal.where(:deal_type => category, :trained=>false).sample(smallest_size)
+	end
+
+
 	#loop through all UNTRAINED deals in TrainingDeals
 	#for each deal, go to the url
-	TrainingDeal.where(:trained => false).each do |training_deal|
-		
+	#TrainingDeal.where(:trained => false).each do |training_deal|
+	training_deals.each do |training_deal|	
 		#timing purposes
 		t = Time.now
 
