@@ -337,7 +337,7 @@ class StaticPagesController < ApplicationController
 		end
 		
 
-		#if it's a GET request (i.e. we just want to see what deals we scrape), do the Naive Bayes prediction
+		#if it's a GET request (i.e. we just want to see what deals we scrape), do the Naive Bayes PREDICTION
 		if request.get?
 			#for each deal
 			@dealsArray.each do |deal|
@@ -388,6 +388,7 @@ class StaticPagesController < ApplicationController
 				nb_probabilities = calculate_nb_probabilities(words)
 				category_scores = get_category_scores(words,nb_probabilities)
 				
+				logger.debug("category scores: #{category_scores}")
 
 				#find most likely category
 				most_likely_category = nil
@@ -399,8 +400,21 @@ class StaticPagesController < ApplicationController
 					end
 				end
 
-				deal.predicted_deal_type = most_likely_category
+				#find second most likely category, so that we can calculate the difference in scores b/w the most and second most likely
+				category_scores.delete(most_likely_category) #delete the most likely category
+				secod_most_likely_category = nil
+				second_max_score = -9999
+				category_scores.keys().each do |category|
+					if category_scores[category] > second_max_score
+						second_max_score=category_scores[category]
+						second_most_likely_category = category
+					end
+				end
 
+				score_diff = (max_score-second_max_score)
+
+				deal.predicted_deal_type = most_likely_category
+				deal.nb_diff = score_diff
 			end
 		end
 

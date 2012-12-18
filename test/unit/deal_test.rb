@@ -18,6 +18,7 @@
 #  updated_at          :datetime         not null
 #  static_location     :string(255)
 #  predicted_deal_type :string(255)
+#  nb_diff             :float
 #
 
 require 'test_helper'

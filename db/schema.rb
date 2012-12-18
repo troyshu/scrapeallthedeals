@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217162318) do
+ActiveRecord::Schema.define(:version => 20121218214528) do
 
   create_table "deals", :force => true do |t|
     t.integer  "external_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20121217162318) do
     t.datetime "updated_at",          :null => false
     t.string   "static_location"
     t.string   "predicted_deal_type"
+    t.float    "nb_diff"
   end
 
   add_index "deals", ["external_id"], :name => "index_deals_on_external_id"

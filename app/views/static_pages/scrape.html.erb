@@ -7,6 +7,7 @@
   <tr>
   	<th>Adventure</th>
     <th>Predicted Deal type</th>
+    <th>Score Difference</th>
     <th>External</th>
     <th>Site</th>
     <th>Name</th>
@@ -27,6 +28,7 @@
   <tr>
   	<td><%= check_box_tag "#{deal.external_id}_#{deal.site}" %></td>
     <td><%= deal.predicted_deal_type %></td>
+    <td><%= "%.2f" % deal.nb_diff %></td>
     <td><%= deal.external_id %></td>
     <td><%= deal.site %></td>
     <td><%= deal.name %></td>
