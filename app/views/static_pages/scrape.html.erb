@@ -7,17 +7,15 @@
   <tr>
   	<th>Adventure</th>
     <th>Predicted Deal type</th>
-    <th>Score Difference</th>
+    <th>Prediction Confidence</th>
     <th>External</th>
     <th>Site</th>
     <th>Name</th>
     <th>Headline</th>
     <th>Picture</th>
-    <th>Expiration</th>
     <th>Url</th>
     <th>Deal Type</th>
     <th>Price</th>
-    <th>Savings</th>
     <th>Location</th>
     <th></th>
     <th></th>
@@ -28,17 +26,25 @@
   <tr>
   	<td><%= check_box_tag "#{deal.external_id}_#{deal.site}" %></td>
     <td><%= deal.predicted_deal_type %></td>
-    <td><%= "%.2f" % deal.nb_diff %></td>
+
+    <% if deal.nb_diff > 10 %>
+        <td class="high-confidence"><%= "%.2f" % deal.nb_diff %></td>
+    <% elsif deal.nb_diff > 6.6 and deal.nb_diff <= 10 %>
+        <td class="med2-confidence"><%= "%.2f" % deal.nb_diff %></td>
+    <% elsif deal.nb_diff > 3.3 and deal.nb_diff <= 6.6 %>
+        <td class="med1-confidence"><%= "%.2f" % deal.nb_diff %></td>
+    <% else %>
+        <td class="low-confidence"><%= "%.2f" % deal.nb_diff %></td>
+    <% end %>
+
     <td><%= deal.external_id %></td>
     <td><%= deal.site %></td>
     <td><%= deal.name %></td>
     <td><%= deal.headline %></td>
-    <td><%= deal.picture %></td>
-    <td><%= deal.expiration %></td>
+    <td><%= link_to "deal picture", deal.picture, :target=>"_blank" %></td>
     <td><%= link_to "deal url", deal.url, :target=>"_blank" %></td>
     <td><%= deal.deal_type %></td>
     <td><%= deal.price %></td>
-    <td><%= deal.savings %></td>
     <td><%= deal.location %></td>
 
   </tr>

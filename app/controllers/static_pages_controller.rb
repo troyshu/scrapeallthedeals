@@ -125,7 +125,7 @@ class StaticPagesController < ApplicationController
 	end
 
 	#smallest size multipler: we may not want the categories to be exactly equal...
-	size_multiplier = 1.5
+	size_multiplier = 1
 	smallest_size *= size_multiplier
 
 	logger.debug("smallest category is #{smallest_category} with #{smallest_size} trainingdeals")
@@ -412,6 +412,7 @@ class StaticPagesController < ApplicationController
 				end
 
 				score_diff = (max_score-second_max_score)
+				score_diff = (score_diff / second_max_score.abs)*100
 
 				deal.predicted_deal_type = most_likely_category
 				deal.nb_diff = score_diff
