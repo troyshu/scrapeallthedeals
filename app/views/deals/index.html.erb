@@ -1,12 +1,29 @@
-<h1><%= @location_string %></h1>
-<h2>
-    <% if @deal_type %>
-    <%= @deal_type.capitalize %> Deals
-    <% end %>
-</h2>
-<span class="small">
-    Last updated: <%= time_ago_in_words(@deals.first.updated_at) %> ago
-</span>
+<div id="header_left">
+    <h1><%= @location_string %></h1>
+
+    <a href="location_select" id="location_select_link" class="lightview" data-lightview-type="inline">Select Location</a>
+    <div id="location_select" style="display:none">
+        
+            <% LocationUrlMap.all.each do |location_row| %>
+                <div class="location_link">
+                    <%= link_to location_row.location_string, "#{root_url}deals/#{location_row.static_location}/adventure" %>
+                </div>
+            <% end %>
+        
+    </div>
+</div>
+
+<div id="header_right">
+    <h2>
+        <% if @deal_type %>
+        <%= @deal_type.capitalize %> Deals
+        <% end %>
+    </h2>
+    <span class="small">
+        Last updated: <%= time_ago_in_words(@deals.first.updated_at) %> ago
+    </span>
+</div>
+
 
 <div id="deals_div">
 <% @deals.each do |deal| %>
