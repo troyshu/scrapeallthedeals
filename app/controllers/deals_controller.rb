@@ -16,7 +16,7 @@ class DealsController < ApplicationController
     end
 
     @deal_type = params[:deal_type]
-    @static_location = params[:static_location]
+    @location_string = LocationUrlMap.where(:static_location=>params[:static_location]).first.location_string
 
     respond_to do |format|
       format.html # index.html.erb

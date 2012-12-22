@@ -8,8 +8,9 @@
 #  static_location :string(255)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  location_string :string(255)
 #
 
 class LocationUrlMap < ActiveRecord::Base
-  attr_accessible :site, :static_location, :suffix
+  attr_accessible :site, :static_location, :suffix, :location_string
 end

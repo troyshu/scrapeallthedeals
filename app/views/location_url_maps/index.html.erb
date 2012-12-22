@@ -5,7 +5,7 @@
     <th>Site</th>
     <th>Suffix</th>
     <th>Static location</th>
-    <th></th>
+    <th>Location String</th>
     <th></th>
     <th></th>
   </tr>
@@ -15,6 +15,7 @@
     <td><%= location_url_map.site %></td>
     <td><%= location_url_map.suffix %></td>
     <td><%= location_url_map.static_location %></td>
+    <td><%= location_url_map.location_string %></td>
     <td><%= link_to 'Show', location_url_map %></td>
     <td><%= link_to 'Edit', edit_location_url_map_path(location_url_map) %></td>
     <td><%= link_to 'Destroy', location_url_map, method: :delete, data: { confirm: 'Are you sure?' } %></td>
