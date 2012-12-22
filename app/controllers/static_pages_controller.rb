@@ -147,6 +147,7 @@ class StaticPagesController < ApplicationController
 		#get current category
 		deal_category = training_deal.deal_type
 
+=begin
 		#TRAINING ON HEADLINE get headline and title
 
 		deal_headline = training_deal.deal_headline
@@ -158,9 +159,9 @@ class StaticPagesController < ApplicationController
 			
 		#tokenize words, (also, at the same time remove all punctuation)
 		words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+=end
 
 
-=begin
 		#TRAINING ON DEAL DESCRIPTION
 		#get url
 		deal_url = training_deal.url
@@ -189,7 +190,7 @@ class StaticPagesController < ApplicationController
 			
 		#tokenize words, (also, at the same time remove all punctuation)
 		words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-=end
+
 
 
 		#aggregate word counts
@@ -214,88 +215,31 @@ class StaticPagesController < ApplicationController
 	end
   end
 
-=begin
-  def populate_bag_of_words
-  	agent = Mechanize.new
-
-	#loop through all UNTRAINED deals in TrainingDeals
-	#for each deal, go to the url
-	TrainingDeal.where(:trained => false).each do |training_deal|
-		
-		#timing purposes
-		t = Time.now
-
-		#get current category
-		deal_category = training_deal.deal_type
-		#get url
-		deal_url = training_deal.url
-		#scrape description of deal
-		begin
-			page = agent.get(deal_url)
-			response = page.content
-			doc = Hpricot(response)
-		rescue => ex
-			logger.debug("ERROR while scraping url for word counts: #{ex.message}")
-			next
-		end
-
-		desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
-
-		full_description = ""
-
-		desc.each do |desc_subsection|
-			full_description += desc_subsection.inner_text
-		end
-
-		#clean description
-		#remove \n, \r, bullets (•)
-		full_description.squish!()
-		#full_description.tr!('•','') #character not allowed...
-			
-		#tokenize words, (also, at the same time remove all punctuation)
-		words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-
-		#aggregate word counts
-		word_freq = getWordFrequencyDict(words)
-
-		#for each word count in current description
-		training_deal.update_attributes(:trained => true)
-
-		word_freq.keys().each do |word|
-			#check bag of words/word count database for existing key [word, category]
-			word_count_row = WordCount.where(:category => deal_category, :word => word).first
-			#if the key doesn't exist, add it to the database
-			if word_count_row == nil
-				WordCount.create(:word => word, :category => deal_category, :count => word_freq[word])
-			#if the key already exists, add(arithmetic) it to the entry that already exists
-			else
-				word_count_row.update_attributes(:count => (word_count_row.count+word_freq[word]))
-			end
-		end
-
-		logger.debug("TrainingDeal id #{training_deal.id} words counted in #{(Time.now-t)} seconds")
-	end
-  end	
-=end
 
   def scrape
 		
-
+		if params[:static_location]
+			static_location = params[:static_location]
+		else
+			#default MIAMI
+	  		static_location = "miami"
+		end
 
 	  	#xpath for a living social deal:
 	  	#/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class='ls-item deal']
 
-		#MIAMI
-	  	static_location = "miami"
+		#look up url from our database
+		url_suffix = LocationUrlMap.where(:static_location=>static_location, :site=>"livingsocial")[0].suffix
+		url = "http://www.livingsocial.com/cities/#{url_suffix}"
 
 	  	#LIVINGSOCIAL
 
 		agent = Mechanize.new
-		page = agent.get('http://www.livingsocial.com/cities/43-miami')
+		page = agent.get(url) 
 		response = page.content
 		doc = Hpricot(response)
 		#deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']") #los angeles
-		deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']") #miami
+		deals=(doc/"/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div/ul[@class='unstyled cities-items']/li[@class^='ls-item deal ']") #miami. should be same for other locations...
 		@dealsArray = []
 		deals.each do |deal|
 			name = (deal/"/div[@class='bd']/h1")[0].innerHTML
@@ -337,94 +281,102 @@ class StaticPagesController < ApplicationController
 		end
 		
 
-		#if it's a GET request (i.e. we just want to see what deals we scrape), do the Naive Bayes PREDICTION
+		#if it's a GET request (i.e. we just want to see what deals we scrape), AND we actually have training data, do the Naive Bayes PREDICTION
 		if request.get?
-			#for each deal
-			@dealsArray.each do |deal|
+			if WordCount.all.count > 0
+				#for each deal
+				@dealsArray.each do |deal|
 
 
-				#alternative implementation: use deal HEADLINE
-
-				deal_headline = deal.headline
-
-				#clean headline
-				deal_headline.squish!()
-				words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-
-
-				#get the deal url (to get the deal DESCRIPTION)
+					#alternative implementation: use deal HEADLINE
 =begin
-				deal_url = deal.url
-				begin
-					page = agent.get(deal_url)
-					response = page.content
-					doc = Hpricot(response)
-				rescue => ex
-					logger.debug("ERROR while scraping url for description in category prediction: #{ex.message}")
-					next
-				end
+					deal_headline = deal.headline
 
-				#then get the deal description
-				desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
-
-				full_description = ""
-
-				desc.each do |desc_subsection|
-					full_description += desc_subsection.inner_text
-				end
-
-				#clean description
-				#remove \n, \r, bullets (•)
-				full_description.squish!()
-				#full_description.tr!('•','') #character not allowed...
-					
-				#tokenize words, (also, at the same time remove all punctuation)
-				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+					#clean headline
+					deal_headline.squish!()
+					words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
 =end
 
+					#get the deal url (to get the deal DESCRIPTION)
 
-
-				#calculate frequency probabilities, then get most likely categories
-				nb_probabilities = calculate_nb_probabilities(words)
-				category_scores = get_category_scores(words,nb_probabilities)
-				
-				logger.debug("category scores: #{category_scores}")
-
-				#find most likely category
-				most_likely_category = nil
-				max_score = -9999
-				category_scores.keys().each do |category|
-					if category_scores[category] > max_score
-						max_score=category_scores[category]
-						most_likely_category = category
+					deal_url = deal.url
+					begin
+						page = agent.get(deal_url)
+						response = page.content
+						doc = Hpricot(response)
+					rescue => ex
+						logger.debug("ERROR while scraping url for description in category prediction: #{ex.message}")
+						next
 					end
-				end
 
-				#find second most likely category, so that we can calculate the difference in scores b/w the most and second most likely
-				category_scores.delete(most_likely_category) #delete the most likely category
-				secod_most_likely_category = nil
-				second_max_score = -9999
-				category_scores.keys().each do |category|
-					if category_scores[category] > second_max_score
-						second_max_score=category_scores[category]
-						second_most_likely_category = category
+					#then get the deal description
+					desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
+
+					full_description = ""
+
+					desc.each do |desc_subsection|
+						full_description += desc_subsection.inner_text
 					end
+
+					#clean description
+					#remove \n, \r, bullets (•)
+					full_description.squish!()
+					#full_description.tr!('•','') #character not allowed...
+						
+					#tokenize words, (also, at the same time remove all punctuation)
+					words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+
+
+
+
+					#calculate frequency probabilities, then get most likely categories
+					nb_probabilities = calculate_nb_probabilities(words)
+					category_scores = get_category_scores(words,nb_probabilities)
+					
+					logger.debug("category scores: #{category_scores}")
+
+					#find most likely category
+					most_likely_category = nil
+					max_score = -9999
+					category_scores.keys().each do |category|
+						if category_scores[category] > max_score
+							max_score=category_scores[category]
+							most_likely_category = category
+						end
+					end
+
+					#find second most likely category, so that we can calculate the difference in scores b/w the most and second most likely
+					category_scores.delete(most_likely_category) #delete the most likely category
+					secod_most_likely_category = nil
+					second_max_score = -9999
+					category_scores.keys().each do |category|
+						if category_scores[category] > second_max_score
+							second_max_score=category_scores[category]
+							second_most_likely_category = category
+						end
+					end
+
+					score_diff = (max_score-second_max_score)
+					score_diff = (score_diff / second_max_score.abs)*100
+
+					deal.predicted_deal_type = most_likely_category
+					deal.nb_diff = score_diff
 				end
-
-				score_diff = (max_score-second_max_score)
-				score_diff = (score_diff / second_max_score.abs)*100
-
-				deal.predicted_deal_type = most_likely_category
-				deal.nb_diff = score_diff
+			else #if we have no training data, just set nb_diff to zero for all deals, so we can still display them
+				@dealsArray.each do |deal|
+					deal.nb_diff = 0
+				end
 			end
 		end
+
+
 
 
 		#POST request (update button click): save selected deals
 		if request.post?
 
 			#first, delete all old
-			Deal.delete_all
+			Deal.where(:static_location=>static_location).delete_all
 
 			#logger.debug("post. params #{params}")
 			#loop through deals, checking to see if adventure checkbox is checked

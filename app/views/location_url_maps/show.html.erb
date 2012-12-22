@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Site:</b>
+  <%= @location_url_map.site %>
+</p>
+
+<p>
+  <b>Suffix:</b>
+  <%= @location_url_map.suffix %>
+</p>
+
+<p>
+  <b>Static location:</b>
+  <%= @location_url_map.static_location %>
+</p>
+
+
+<%= link_to 'Edit', edit_location_url_map_path(@location_url_map) %> |
+<%= link_to 'Back', location_url_maps_path %>

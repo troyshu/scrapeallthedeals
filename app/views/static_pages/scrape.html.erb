@@ -22,7 +22,10 @@
     <th></th>
   </tr>
 
+<% tab_index_count=0 %>
 <% @dealsArray.each do |deal| %>
+
+<% if deal.nb_diff != nil %>
   <tr>
   	<td><%= check_box_tag "#{deal.external_id}_#{deal.site}" %></td>
     <td><%= deal.predicted_deal_type %></td>
@@ -48,6 +51,9 @@
     <td><%= deal.location %></td>
 
   </tr>
+<% tab_index_count+=1 %>
+<% end %>
+
 <% end %>
 </table>
 

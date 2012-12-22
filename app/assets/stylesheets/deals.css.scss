@@ -1,8 +1,22 @@
 // Place all the styles related to the Deals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h1 {
+	font-size:30px;
+}
+h2 {
+	font-size:22px;
+}
+span.small{
+	font-size:12px;
+	color:#777777;
+}
 
+#deals_div {
+	clear:both;
+}
 .deal_class {
+
 	float:left;
 	border:black 1px solid;
 	margin:10px;

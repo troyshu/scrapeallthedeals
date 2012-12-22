@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: location_url_maps
+#
+#  id              :integer          not null, primary key
+#  site            :string(255)
+#  suffix          :string(255)
+#  static_location :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  site: MyString
+  suffix: MyString
+  static_location: MyString
+
+two:
+  site: MyString
+  suffix: MyString
+  static_location: MyString

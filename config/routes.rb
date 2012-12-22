@@ -1,4 +1,6 @@
 Scrapeallthedeals::Application.routes.draw do
+  resources :location_url_maps
+
   resources :word_counts
 
   resources :training_deals
@@ -13,7 +15,9 @@ Scrapeallthedeals::Application.routes.draw do
 
   get "static_pages/scrape"
   post "static_pages/scrape"
+
   match '/scrape' =>'static_pages#scrape'
+  match '/scrape/:static_location' =>'static_pages#scrape'
 
   match '/populatebow' =>'static_pages#populate_bag_of_words'
   match '/deletebow' => 'static_pages#delete_bag_of_words'
