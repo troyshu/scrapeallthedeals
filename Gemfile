@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails'
 gem 'mechanize'
 gem 'hpricot'
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'sqlite3'
