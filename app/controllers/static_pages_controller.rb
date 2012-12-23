@@ -224,6 +224,7 @@ class StaticPagesController < ApplicationController
   end
 
 
+
   def scrape
 		
 		if params[:static_location]
