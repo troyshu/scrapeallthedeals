@@ -4,6 +4,7 @@ gem 'rails'
 gem 'mechanize'
 gem 'hpricot'
 gem 'delayed_job_active_record'
+gem "daemons"
 
 group :development do
   gem 'sqlite3'

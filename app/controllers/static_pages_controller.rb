@@ -99,7 +99,8 @@ class StaticPagesController < ApplicationController
 	end
   end
 
-  def populate_bag_of_words
+  def self.populate_bag_of_words_helper
+	
   	agent = Mechanize.new
 
 
@@ -213,6 +214,13 @@ class StaticPagesController < ApplicationController
 
 		logger.debug("TrainingDeal id #{training_deal.id} words counted in #{(Time.now-t)} seconds")
 	end
+
+  end
+
+  def populate_bag_of_words
+
+	StaticPagesController.delay.populate_bag_of_words_helper()
+
   end
 
 
@@ -410,5 +418,6 @@ class StaticPagesController < ApplicationController
 	end
 
 	
+
 
 end
