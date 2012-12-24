@@ -9,7 +9,7 @@ class StaticPagesController < ApplicationController
   def help
   end
 
-  def get_category_scores(text, probability_map)
+  def self.get_category_scores(text, probability_map)
 	#text: a list of words in document
 	test_words = text
 
@@ -39,7 +39,7 @@ class StaticPagesController < ApplicationController
 
   end
 	
-  def calculate_nb_probabilities(text)
+  def self.calculate_nb_probabilities(text)
 	#text: a list of words in document
 	test_words = text
 
@@ -223,10 +223,8 @@ class StaticPagesController < ApplicationController
 
   end
 
-
-
-  def scrape
-		
+  def self.scrape_helper(params)
+	
 		if params[:static_location]
 			static_location = params[:static_location]
 		else
@@ -269,8 +267,12 @@ class StaticPagesController < ApplicationController
 			#logger.debug("picture: #{picture}")
 			#logger.debug("url: #{url}")
 			#logger.debug("external_id: #{external_id}")
-
-			deal = Deal.new do |d| 
+			
+			if location=="national" #skip national deals
+				next
+			end
+			
+			adeal = Deal.new do |d| 
 				d.name = name
 				d.headline = headline
 				d.price = price
@@ -281,107 +283,116 @@ class StaticPagesController < ApplicationController
 				#d.deal_type = deal_type
 				d.external_id = external_id
 				d.static_location = static_location
+				d.just_scraped = true
 			end
 			#deal.save
 			#logger.debug("saved Deal #{deal.id}")
 
 			#save deal in temporary array
-			@dealsArray.push(deal)
+			@dealsArray.push(adeal)
 		end
 		
 
-		#if it's a GET request (i.e. we just want to see what deals we scrape), AND we actually have training data, do the Naive Bayes PREDICTION
-		if request.get?
-			if WordCount.all.count > 0
-				#for each deal
-				@dealsArray.each do |deal|
+		#do the Naive Bayes PREDICTION
+
+		if WordCount.all.count > 0
+			#for each deal
+			@dealsArray.each do |deal|
 
 
-					#alternative implementation: use deal HEADLINE
+				#alternative implementation: use deal HEADLINE
 =begin
-					deal_headline = deal.headline
+				deal_headline = deal.headline
 
-					#clean headline
-					deal_headline.squish!()
-					words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
+				#clean headline
+				deal_headline.squish!()
+				words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
 =end
 
-					#get the deal url (to get the deal DESCRIPTION)
+				#get the deal url (to get the deal DESCRIPTION)
 
-					deal_url = deal.url
-					begin
-						page = agent.get(deal_url)
-						response = page.content
-						doc = Hpricot(response)
-					rescue => ex
-						logger.debug("ERROR while scraping url for description in category prediction: #{ex.message}")
-						next
-					end
+				deal_url = deal.url
+				begin
+					page = agent.get(deal_url)
+					response = page.content
+					doc = Hpricot(response)
+				rescue => ex
+					logger.debug("ERROR while scraping url for description in category prediction: #{ex.message}")
+					next
+				end
 
-					#then get the deal description
-					desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
+				#then get the deal description
+				desc=(doc/"/html/body/div/div[@class='row']/div[@class^='span12']/div/div[@class='deal-wrapper']/div/div/div[@id^='view']/p")
 
-					full_description = ""
+				full_description = ""
 
-					desc.each do |desc_subsection|
-						full_description += desc_subsection.inner_text
-					end
+				desc.each do |desc_subsection|
+					full_description += desc_subsection.inner_text
+				end
 
-					#clean description
-					#remove \n, \r, bullets (•)
-					full_description.squish!()
-					#full_description.tr!('•','') #character not allowed...
-						
-					#tokenize words, (also, at the same time remove all punctuation)
-					words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-
-
-
-
-					#calculate frequency probabilities, then get most likely categories
-					nb_probabilities = calculate_nb_probabilities(words)
-					category_scores = get_category_scores(words,nb_probabilities)
+				#clean description
+				#remove \n, \r, bullets (•)
+				full_description.squish!()
+				#full_description.tr!('•','') #character not allowed...
 					
-					logger.debug("category scores: #{category_scores}")
+				#tokenize words, (also, at the same time remove all punctuation)
+				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
 
-					#find most likely category
-					most_likely_category = nil
-					max_score = -9999
-					category_scores.keys().each do |category|
-						if category_scores[category] > max_score
-							max_score=category_scores[category]
-							most_likely_category = category
-						end
+
+
+
+				#calculate frequency probabilities, then get most likely categories
+				nb_probabilities = StaticPagesController.calculate_nb_probabilities(words)
+				category_scores = StaticPagesController.get_category_scores(words,nb_probabilities)
+				
+				logger.debug("category scores: #{category_scores}")
+
+				#find most likely category
+				most_likely_category = nil
+				max_score = -9999
+				category_scores.keys().each do |category|
+					if category_scores[category] > max_score
+						max_score=category_scores[category]
+						most_likely_category = category
 					end
+				end
 
-					#find second most likely category, so that we can calculate the difference in scores b/w the most and second most likely
-					category_scores.delete(most_likely_category) #delete the most likely category
-					secod_most_likely_category = nil
-					second_max_score = -9999
-					category_scores.keys().each do |category|
-						if category_scores[category] > second_max_score
-							second_max_score=category_scores[category]
-							second_most_likely_category = category
-						end
+				#find second most likely category, so that we can calculate the difference in scores b/w the most and second most likely
+				category_scores.delete(most_likely_category) #delete the most likely category
+				secod_most_likely_category = nil
+				second_max_score = -9999
+				category_scores.keys().each do |category|
+					if category_scores[category] > second_max_score
+						second_max_score=category_scores[category]
+						second_most_likely_category = category
 					end
-
-					score_diff = (max_score-second_max_score)
-					score_diff = (score_diff / second_max_score.abs)*100
-
-					deal.predicted_deal_type = most_likely_category
-					deal.nb_diff = score_diff
 				end
-			else #if we have no training data, just set nb_diff to zero for all deals, so we can still display them
-				@dealsArray.each do |deal|
-					deal.nb_diff = 0
-				end
+
+				score_diff = (max_score-second_max_score)
+				score_diff = (score_diff / second_max_score.abs)*100
+
+				deal.predicted_deal_type = most_likely_category
+				deal.nb_diff = score_diff
+			end
+		else #if we have no training data, just set nb_diff to zero for all deals, so we can still display them
+			@dealsArray.each do |deal|
+				deal.nb_diff = 0
 			end
 		end
+
+		#save all dealsArray to table (remember, they are tagged with just_scraped=true)
+		@dealsArray.each do |deal|
+			logger.debug("saving scraped deal #{deal.id}")
+			deal.save
+		end
+
 
 
 
 
 		#POST request (update button click): save selected deals
+		#TODO: put this in another method...
+=begin
 		if request.post?
 
 			#first, delete all old
@@ -415,10 +426,55 @@ class StaticPagesController < ApplicationController
 			end
 
 		end
+=end
+  end
 
+  def scrape
+	StaticPagesController.delay.scrape_helper(params)
+	@static_location = params[:static_location]
+  end
+
+  def view_scraped
+  	static_location = params[:static_location]
+  	@dealsArray = []
+	Deal.where(:just_scraped=>true, :static_location=>static_location).each do |deal|
+		@dealsArray.push(deal)
 	end
 
-	
+	if request.post? #we hit the submit button
+		#first, delete all old
+		Deal.where(:static_location=>static_location).delete_all
+
+		#logger.debug("post. params #{params}")
+		#loop through deals, checking to see if adventure checkbox is checked
+		#!!!TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked. or some other way to get the predicted category type, without doing the whole naive bayes prediction again...
+		@dealsArray.each do |deal|
+			if params["#{deal.external_id}_#{deal.site}"]=="1"
+				newdeal = deal.dup
+				#set deal type to adventure
+				newdeal.deal_type="adventure"
+				newdeal.just_scraped=false
+				#save deal in database
+				newdeal.save
+			end
+		end
+		
+		#THEN, save all deals do the training deals table
+		@dealsArray.each do |deal|
+			#first, only add deal to training deal if it isn't already in the trainingdeal table
+			if TrainingDeal.find_by_deal_id(deal.external_id)==nil
+				training_deal = TrainingDeal.new do |d| 
+					d.deal_id = deal.external_id
+					d.deal_headline = deal.headline
+					d.deal_type = deal.deal_type
+					d.url = deal.url
+					d.trained = false
+				end
+				training_deal.save
+			end
+		end
+	end
+  end
 
 
 end

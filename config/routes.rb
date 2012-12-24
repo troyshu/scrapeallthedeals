@@ -17,6 +17,8 @@ Scrapeallthedeals::Application.routes.draw do
   post "static_pages/scrape"
 
   match '/scrape' =>'static_pages#scrape'
+  
+  match '/view_scraped/:static_location' =>'static_pages#view_scraped'
   match '/scrape/:static_location' =>'static_pages#scrape'
 
   match '/populatebow' =>'static_pages#populate_bag_of_words'
