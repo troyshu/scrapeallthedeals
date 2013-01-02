@@ -232,6 +232,9 @@ class StaticPagesController < ApplicationController
 	  		static_location = "miami"
 		end
 
+		#first delete old just_scraped deals for location
+		Deal.where(:static_location=>static_location, :just_scraped=>true).delete_all
+
 	  	#xpath for a living social deal:
 	  	#/html/body[@class='external www external-www cities cities-show full-width']/div[@class='container main-content']/div[@class='row']/div[@class='span12 content']/div[@id='cities-content-id']/ul[@class='unstyled cities-items']/li[@class='ls-item deal']
 
