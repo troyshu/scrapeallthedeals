@@ -262,6 +262,7 @@ class StaticPagesController < ApplicationController
 			#deal_type = "adventure"
 			external_id = deal['dealid']
 
+
 			#logger.debug("name: #{name}")
 			#logger.debug("headline: #{headline}")
 			#logger.debug("price: #{price}")
@@ -287,6 +288,7 @@ class StaticPagesController < ApplicationController
 				d.external_id = external_id
 				d.static_location = static_location
 				d.just_scraped = true
+
 			end
 			#deal.save
 			#logger.debug("saved Deal #{deal.id}")
