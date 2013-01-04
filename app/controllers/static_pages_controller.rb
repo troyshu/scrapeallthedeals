@@ -148,7 +148,7 @@ class StaticPagesController < ApplicationController
 		#get current category
 		deal_category = training_deal.deal_type
 
-=begin
+
 		#TRAINING ON HEADLINE get headline and title
 
 		deal_headline = training_deal.deal_headline
@@ -160,9 +160,9 @@ class StaticPagesController < ApplicationController
 			
 		#tokenize words, (also, at the same time remove all punctuation)
 		words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-=end
 
 
+=begin
 		#TRAINING ON DEAL DESCRIPTION
 		#get url
 		deal_url = training_deal.url
@@ -191,7 +191,7 @@ class StaticPagesController < ApplicationController
 			
 		#tokenize words, (also, at the same time remove all punctuation)
 		words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-
+=end
 
 
 		#aggregate word counts
@@ -306,16 +306,16 @@ class StaticPagesController < ApplicationController
 
 
 				#alternative implementation: use deal HEADLINE
-=begin
+
 				deal_headline = deal.headline
 
 				#clean headline
 				deal_headline.squish!()
 				words = deal_headline.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-=end
+
 
 				#get the deal url (to get the deal DESCRIPTION)
-
+=begin
 				deal_url = deal.url
 				begin
 					page = agent.get(deal_url)
@@ -342,7 +342,7 @@ class StaticPagesController < ApplicationController
 					
 				#tokenize words, (also, at the same time remove all punctuation)
 				words = full_description.downcase.gsub(' ','_').gsub(/\W/,'').gsub('_',' ').split(' ')
-
+=end
 
 
 
@@ -392,46 +392,6 @@ class StaticPagesController < ApplicationController
 		end
 
 
-
-
-
-		#POST request (update button click): save selected deals
-		#TODO: put this in another method...
-=begin
-		if request.post?
-
-			#first, delete all old
-			Deal.where(:static_location=>static_location).delete_all
-
-			#logger.debug("post. params #{params}")
-			#loop through deals, checking to see if adventure checkbox is checked
-			#!!!TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked. or some other way to get the predicted category type, without doing the whole naive bayes prediction again...
-			@dealsArray.each do |deal|
-				if params["#{deal.external_id}_#{deal.site}"]=="1"
-					#set deal type to adventure
-					deal.deal_type="adventure"
-					#save deal in database
-					deal.save
-				end
-			end
-			
-			#THEN, save all deals do the training deals table
-			@dealsArray.each do |deal|
-				#first, only add deal to training deal if it isn't already in the trainingdeal table
-				if TrainingDeal.find_by_deal_id(deal.external_id)==nil
-					training_deal = TrainingDeal.new do |d| 
-						d.deal_id = deal.external_id
-						d.deal_headline = deal.headline
-						d.deal_type = deal.deal_type
-						d.url = deal.url
-						d.trained = false
-					end
-					training_deal.save
-				end
-			end
-
-		end
-=end
   end
 
   def scrape
@@ -453,6 +413,8 @@ class StaticPagesController < ApplicationController
 		#logger.debug("post. params #{params}")
 		#loop through deals, checking to see if adventure checkbox is checked
 		#!!!TODO: loop thorugh deals, checking to see if predicted adventure checkbox is checked. or some other way to get the predicted category type, without doing the whole naive bayes prediction again...
+		anotherArray = []
+
 		@dealsArray.each do |deal|
 			if params["#{deal.external_id}_#{deal.site}"]=="1"
 				newdeal = deal.dup
@@ -461,9 +423,15 @@ class StaticPagesController < ApplicationController
 				newdeal.just_scraped=false
 				#save deal in database
 				newdeal.save
+				#add to temp array
+				anotherArray.push(newdeal)
+			else
+				anotherArray.push(deal)
 			end
 		end
 		
+		@dealsArray = anotherArray.dup
+
 		#THEN, save all deals do the training deals table
 		@dealsArray.each do |deal|
 			#first, only add deal to training deal if it isn't already in the trainingdeal table
@@ -476,6 +444,8 @@ class StaticPagesController < ApplicationController
 					d.trained = false
 				end
 				training_deal.save
+			else
+				logger.debug("deal with external id #{deal.external_id} already exsits")
 			end
 		end
 	end
