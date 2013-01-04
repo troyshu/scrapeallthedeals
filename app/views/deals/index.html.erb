@@ -3,11 +3,15 @@
 
     <a href="location_select" id="location_select_link" class="lightview" data-lightview-type="inline">Select Location</a>
     <div id="location_select" style="display:none">
-        
+            <% count = 0 %>
             <% LocationUrlMap.all.each do |location_row| %>
                 <div class="location_link">
                     <%= link_to location_row.location_string, "#{root_url}deals/#{location_row.static_location}/adventure" %>
                 </div>
+                <% if count==2 %>
+                    <br>
+                <% end %>
+                <% count+=1 %>
             <% end %>
         
     </div>
