@@ -7,6 +7,8 @@ Scrapeallthedeals::Application.routes.draw do
 
   resources :deals
 
+  resources :sessions, only: [:new, :create, :destroy]
+
   root :to => 'deals#index' #MVP, for now...
 
   get "static_pages/home"
@@ -26,7 +28,8 @@ Scrapeallthedeals::Application.routes.draw do
 
   match 'deals/:static_location/:deal_type' => 'deals#index'
 
-
+  match '/signin',  to: 'sessions#new'
+  match '/sessions/destroy', to: 'sessions#destroy'
 
 
   # The priority is based upon order of creation:

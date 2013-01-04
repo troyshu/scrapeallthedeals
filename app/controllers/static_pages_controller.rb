@@ -3,6 +3,10 @@ require 'hpricot'
 require 'mechanize'
 
 class StaticPagesController < ApplicationController
+
+  
+  before_filter :signed_in_user, only: [:scrape, :view_scraped, :populate_bag_of_words, :delete_bag_of_words]
+
   def home
   end
 
@@ -91,6 +95,7 @@ class StaticPagesController < ApplicationController
 
 
   def delete_bag_of_words
+
 	#delete word counts
 	WordCount.delete_all
 	#reset all trained flags
@@ -395,11 +400,15 @@ class StaticPagesController < ApplicationController
   end
 
   def scrape
+
+
 	StaticPagesController.delay.scrape_helper(params)
 	@static_location = params[:static_location]
   end
 
   def view_scraped
+
+
   	static_location = params[:static_location]
   	@dealsArray = []
 	Deal.where(:just_scraped=>true, :static_location=>static_location).each do |deal|
@@ -454,7 +463,13 @@ class StaticPagesController < ApplicationController
 
   end
 
+  private
 
+	  def signed_in_user
+	      unless signed_in?
+	        redirect_to root_url
+	      end
+	  end
   
 
 end

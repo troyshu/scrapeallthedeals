@@ -5,6 +5,7 @@ gem 'mechanize'
 gem 'hpricot'
 gem 'delayed_job_active_record'
 gem "daemons"
+gem 'bcrypt-ruby'
 
 group :development do
   gem 'sqlite3'

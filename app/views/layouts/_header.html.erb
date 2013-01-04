@@ -1,3 +1,7 @@
 <div class="header_bar">
 	<%= link_to "ADRENALINE JUNKIE", root_path, id: "logo" %>
 </div>
+<br>
+<% if signed_in? %>
+SIGNED IN
+<% end %>
