@@ -8,7 +8,7 @@
                 <div class="location_link">
                     <%= link_to location_row.location_string, "#{root_url}deals/#{location_row.static_location}/adventure" %>
                 </div>
-                <% if count==2 %>
+                <% if ((count+1)%3)==0 %>
                     <br>
                 <% end %>
                 <% count+=1 %>
