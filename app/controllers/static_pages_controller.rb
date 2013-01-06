@@ -406,6 +406,10 @@ class StaticPagesController < ApplicationController
 	@static_location = params[:static_location]
   end
 
+  def scrape_all
+	
+  end
+
   def view_scraped
 
 

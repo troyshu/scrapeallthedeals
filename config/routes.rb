@@ -21,7 +21,10 @@ Scrapeallthedeals::Application.routes.draw do
   match '/scrape' =>'static_pages#scrape'
   
   match '/view_scraped/:static_location' =>'static_pages#view_scraped'
+  match '/view_scraped_all' => 'static_pages#view_scraped_all'
+
   match '/scrape/:static_location' =>'static_pages#scrape'
+  match '/scrape_all' => 'static_pages#scrape_all'
 
   match '/populatebow' =>'static_pages#populate_bag_of_words'
   match '/deletebow' => 'static_pages#delete_bag_of_words'
