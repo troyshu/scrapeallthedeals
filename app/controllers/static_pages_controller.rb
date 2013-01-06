@@ -425,16 +425,30 @@ class StaticPagesController < ApplicationController
 		anotherArray = []
 
 		@dealsArray.each do |deal|
-			if params["#{deal.external_id}_#{deal.site}"]=="1"
+			if params["#{deal.external_id}_#{deal.site}_user"]=="1"
 				newdeal = deal.dup
 				#set deal type to adventure
 				newdeal.deal_type="adventure"
 				newdeal.just_scraped=false
+
+				#save the predicted deal type
+				if params["#{deal.external_id}_#{deal.site}_predicted"]=="1"
+					newdeal.predicted_deal_type = "adventure"
+				else
+					newdeal.predicted_deal_type = nil
+				end
+
 				#save deal in database
 				newdeal.save
 				#add to temp array
 				anotherArray.push(newdeal)
 			else
+				#save the predicted deal type
+				if params["#{deal.external_id}_#{deal.site}_predicted"]=="1"
+					deal.predicted_deal_type = "adventure"
+				else
+					deal.predicted_deal_type = nil
+				end
 				anotherArray.push(deal)
 			end
 		end
@@ -451,6 +465,7 @@ class StaticPagesController < ApplicationController
 					d.deal_type = deal.deal_type
 					d.url = deal.url
 					d.trained = false
+					d.predicted_deal_type = deal.predicted_deal_type
 				end
 				training_deal.save
 			else
